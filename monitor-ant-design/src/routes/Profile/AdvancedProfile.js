@@ -25,7 +25,7 @@ const menu = (
 const description = (
 		<div className="outer-iframe">
         <div className="d-iframe">
-            <iframe id="previewIframe" src="http://gallery.echartsjs.com/preview.html?c=effectScatter-map&v=1" frameBorder="0" 
+            <iframe id="previewIframe" src="http://powertools.local:8088/countryMonitor" frameBorder="0" 
             	width="1600" height="1000">
           </iframe>
         </div>
