@@ -5,48 +5,49 @@
     <meta charset="utf-8">
     <title>countryMonitor</title>
     <!-- 引入 echarts.js -->
-    <script src="echarts.min.js"></script>
-    <script src="http://gallerybox.echartsjs.com/dep/echarts/map/js/china.js"></script>
+    <script src="echarts.js"></script>
 </head>
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main" style="width: 1500px;height:900px;"></div>
-    <script type="text/javascript">            
-        var myChart = echarts.init(document.getElementById('main'));
-        //替换GALERY中代码
-   
-   function getNowFormatDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var seperator2 = ":";
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    if (month >= 1 && month <= 9) {
-        month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-    }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + " " + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds();
-    return currentdate;
-}
-     
+    <script type="text/javascript">   
+    
+    // 路径配置
+    require.config({
+       paths: {
+           echarts: 'http://echarts.baidu.com/build/dist'
+       }
+     });
+     require(
+        [
+           'echarts',
+           'echarts/chart/map' // 使用柱状图就加载bar模块，按需加载
+         ],   
+         
+         
+            
+         function (ec) {
+       		var myChart = ec.init(document.getElementById('main'));
+       		var ecConfig = require('echarts/config');
+		
+		
+	
 var data_yujing = [
-     {name: '天津', value: 65},
-     {name: '河北', value: 32},
+     {name: '天津', value: 50},
+     {name: '河北', value: 16},
      {name: '山西', value: 69},
      {name: '广东', value: 90},
+     {name: '内蒙古', value: 5},
+     {name: '辽宁', value: 0},
      {name: '浙江', value: 123}
 ];
 var data_jinggao = [
-     {name: '上海', value: 111},
-     {name: '安徽', value: 23},
-     {name: '山东', value: 34},
-     {name: '海南', value: 102},
-     {name: '广东', value: 290},
-     {name: '浙江', value: 99}
+     {name: '上海', value: 89},
+     {name: '安徽', value: 1},
+     {name: '山东', value: 5},
+     {name: '海南', value: 38},
+     {name: '广东', value: 120},
+     {name: '浙江', value: 67}
 ];
 
 var geoCoordMap = {
@@ -81,21 +82,56 @@ var geoCoordMap = {
         "青海": [101.74,36.56],
         "宁夏": [106.27,38.47],
         "新疆": [87.68,43.77],
-        "香港":[114.18,22.29],
-        "澳门":[113.55,22.20],
         "台湾":[121.97,24.08]
 };
 
 var convertData = function (data) {
     var res = [];
     for (var i = 0; i < data.length; i++) {
-        var geoCoord = geoCoordMap[data[i].name];
-        if (geoCoord) {
-            res.push({
-                name: data[i].name,
-                value: geoCoord.concat(data[i].value)
-            });
+        if(data[i].value > 0){
+	        var geoCoord = geoCoordMap[data[i].name];
+	        if (geoCoord) {
+	            res.push({
+	                name: data[i].name,
+	                value: geoCoord.concat(data[i].value)
+	            });
+	        }
         }
+        
+    }
+    return res;
+};
+
+var convertData_yujing = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        if(data[i].value > 0){
+	        var geoCoord = geoCoordMap[data[i].name];
+	        if (geoCoord) {
+	            res.push({
+	                name: data[i].name,
+	                value: geoCoord.concat(data[i].value).concat("(预警)")
+	            });
+	        }
+        }
+        
+    }
+    return res;
+};
+
+var convertData_jinggao = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        if(data[i].value > 0){
+	        var geoCoord = geoCoordMap[data[i].name];
+	        if (geoCoord) {
+	            res.push({
+	                name: data[i].name,
+	                value: geoCoord.concat(data[i].value).concat("(警告)")
+	            });
+	        }
+        }
+        
     }
     return res;
 };
@@ -105,8 +141,8 @@ option = {
     title: {
         text: '全国订单监控',
         subtext: getNowFormatDate(),
-        sublink: '',
-        left: 'center',
+        sublink: 'http://localhost:8088/countryMonitor',
+        x: 'center',
         textStyle: {
             color: '#000000'
         }
@@ -115,73 +151,120 @@ option = {
         trigger: 'item',
         formatter: function (params) {
               if(typeof(params.value)[2] == "undefined"){
-              	if(isNaN(params.value)){
+              	if(isNaN(params.value) || params.value == 0){
               		return params.name + ' : 订单正常';
               	}
               	return params.name + '(预警+警告) : ' + params.value;
               }else{
-              	return params.name + ' : ' + params.value[2];
+              	
+              	return params.name +params.value[3]+ ' : ' + params.value[2];
               }
             }
     },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data:['警告','预警']
-    },
-    geo: {
-        map: 'china',
-        type: 'scatter',
-        label: {
-            emphasis: {
-                show: false
-            }
-        },
-        roam: false,
-        itemStyle: {
-            normal: {
-            	label:{show:true},
-                areaColor: '#808080',
-                borderColor: '#111'
-            },
-            emphasis: {
-                areaColor: '#2a333d'
-            }
-        }
-    },
     series : [
-        {
-            name: '预警_scatter',
-            type: 'scatter',
-            coordinateSystem: 'geo',
-            data: convertData(data_yujing),
-            symbolSize: function (val) {
-                return val[2] / 10;
-            },
+       {
+        	name: 'onlymap',
+            type: 'map',
+            map: 'china',
+            geoIndex: 0,
+             selectedMode: 'single',
             label: {
                 normal: {
-                    formatter: '{b}',
-                    position: 'right',
-                    show: true
+                    show: false
                 },
                 emphasis: {
-                    show: true
+                    show: false,
+                    textStyle: {
+                        color: '#fff'
+                    }
                 }
             },
-            itemStyle: {
+            roam: false,
+             itemStyle: {
                 normal: {
-                    color: '#FFD700'
+                    borderWidth:1,
+                    borderColor:'#111',
+                    color: '#CCCCCC',
+                    label: {
+                        show: true,
+                        textStyle: {
+                            color: '#111'
+                        }
+                    }
+                },
+                emphasis: { 
+                    borderWidth:1,
+                    borderColor:'#fff',
+                    color: '#808080',
+                    label: {
+                        show: true,
+                        textStyle: {
+                            color: '#111'
+                        }
+                    }
                 }
-            }
-        }, {
-            name: '预警数量_scatter',
-            type: 'scatter',
-            coordinateSystem: 'geo',
-            hoverAnimation: 'false',
-            legendHoverLink: 'false',
-            symbol: 'pin',
-            symbolSize: 25,
+            },
+            animation: false,
+            data: data_yujing
+        },
+        {
+        	name: 'onlymap',
+            type: 'map',
+            map: 'china',
+            geoIndex: 0,
+             selectedMode: 'single',
             label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: false,
+                    textStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            roam: false,
+             itemStyle: {
+                normal: {
+                    borderWidth:1,
+                    borderColor:'#111',
+                    color: '#CCCCCC',
+                    label: {
+                        show: true,
+                        textStyle: {
+                            color: '#111'
+                        }
+                    }
+                },
+                emphasis: {          
+                    borderWidth:1,
+                    borderColor:'#fff',
+                    color: '#808080',
+                    label: {
+                        show: true,
+                        textStyle: {
+                            color: '#111'
+                        }
+                    }
+                }
+            },
+            animation: false,
+            data: data_jinggao
+        },
+        {
+            name: '预警',
+            type: 'map',
+            mapType: 'china',
+            hoverable: true,
+            roam:false,
+            data : [],
+            markPoint : {
+              symbol:'pin',
+               symbolSize: function (val) {
+                return (val[2]+50) / 10;
+               },  
+               label: {
                 normal: {
                     show: true,
                     textStyle: {
@@ -192,28 +275,36 @@ option = {
             },
             itemStyle: {
                 normal: {
-                    color: '#FFD700', //标志颜色
-                }
+                    color: '#FFD700',
+                    label: {
+                    textStyle: {
+                        color: '#111',
+                        fontSize: 9,
+                    }
+                    }
+                },
+                
             },
-            zlevel: 6,
-            data: convertData(data_yujing)
+                data :convertData_yujing(data_yujing),
+            },
+            geoCoord: geoCoordMap
         },
         {
-            name: '警告_effectScatter',
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            data: convertData(data_jinggao.sort(function (a, b) {
-                return b.value - a.value;
-            }).slice(0, 6)),
-            symbolSize: function (val) {
-                return val[2] / 10;
+            name: '警告',
+            type: 'map',
+            mapType: 'china',
+            data:[],
+            markPoint : {
+                symbol:'Circle',
+                 symbolSize: function (val) {
+                     return (val[2]+50) / 10;
             },
-            showEffectOn: 'render',
-            rippleEffect: {
-                brushType: 'stroke'
-            },
-            hoverAnimation: true,
-            label: {
+                effect : {
+                    show: false,
+                   type:'scale',
+                    shadowBlur : 0
+                },
+                label: {
                 normal: {
                     formatter: '{b}',
                     position: 'right',
@@ -228,87 +319,53 @@ option = {
                     shadowColor: '#333'
                 }
             },
-            zlevel: 1
-        }, {
-            name: '警告数量_scatter',
-            type: 'scatter',
-            coordinateSystem: 'geo',
-            symbol: 'pin',
-            symbolSize: 25,
-            label: {
-                normal: {
-                    show: true,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: 9,
-                    }
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#F62157', //标志颜色
-                }
-            },
-            zlevel: 6,
-            data: convertData(data_jinggao)
-        } ,{
-        	name: '预警',
-            type: 'map',
-            map: 'china',
-            geoIndex: 0,
-            aspectScale: 0.75, //长宽比
-             selectedMode: 'single',
-            label: {
-                normal: {
-                    show: false
-                },
-                emphasis: {
-                    show: false,
-                    textStyle: {
-                        color: '#fff'
-                    }
-                }
-            },
-            roam: true,
-            itemStyle: {
-                normal: {
-                    color: '#FFD700'
-                }
-            },
-            animation: false,
-            data: data_yujing
-        },{
-        	name: '警告',
-            type: 'map',
-            map: 'china',
-            geoIndex: 0,
-            aspectScale: 0.75, //长宽比
-             selectedMode: 'single',
-            label: {
-                normal: {
-                    show: false
-                },
-                emphasis: {
-                    show: false,
-                    textStyle: {
-                        color: '#fff'
-                    }
-                }
-            },
-            roam: true,
-            itemStyle: {
-                normal: {
-                    color: '#F62157', //标志颜色
-                }
-            },
-            animation: false,
-            data: data_jinggao
+                data : convertData_jinggao(data_jinggao)
+            }
         }
     ]
 };
 
+myChart.on(ecConfig.EVENT.MAP_SELECTED,function (param) {  
+                var selected=param.selected;  
+               var mapSeries=option.series[0];  
+                var data= [];  
+                var legendData= [];  
+                var name;  
+                for (var p=0,len=mapSeries.data.length; p<len; p++) {  
+                    name=mapSeries.data[p].name;  
+                    mapSeries.data[p].selected=selected[name];  
+                    if (selected[name]) {  
+                        alert("todo 变更订单状态监控省份为"+name); //这里只是简单的做一个事例说明，弹出用户所选的省，如需做其他的扩展，可以在这里边添加相应的操作   
+  
+                    }  
+                }  
+            });         
+            
  myChart.setOption(option);  
+		
+		}
 
+		)
+		
+		
+			function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+    return currentdate;
+}
+     
     </script>
 </body>
 </html>
