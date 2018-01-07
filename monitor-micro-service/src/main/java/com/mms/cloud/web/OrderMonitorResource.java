@@ -3,6 +3,7 @@ package com.mms.cloud.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,8 +27,10 @@ public class OrderMonitorResource {
 	@Autowired
 	private OrderMonitorFacade orderMonitorFacade;
 	
-    private final static String INDEX = "orderpoc-*";
+//    private final static String INDEX = "orderpoc-*";
     private final static String TYPE = "log";
+    
+    private String index;
 
     @Autowired
     private SearchService searchService;
@@ -38,7 +41,7 @@ public class OrderMonitorResource {
 		OrderEntity e = new OrderEntity();
 		
 		SearchByTemplateRequest request = SearchByTemplateRequest.create()
-                .setIndexName(INDEX)
+                .setIndexName(index)
                 .setTemplateName("find_order.twig")
                 .setAddId(false)
                 .setTypeReference(new OrderEntityTypeReference())
@@ -71,4 +74,9 @@ public class OrderMonitorResource {
 		return "{\"name\":\"test\",\"avatar\":\"https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png\",\"userid\":\"00000001\",\"notifyCount\":12}";
 		
 	}
+	
+	@Value("${elastic.index.name}")
+    public void setIndex(String index) {
+        this.index = index;
+    }
 }

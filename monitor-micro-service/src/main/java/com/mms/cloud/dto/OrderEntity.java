@@ -14,6 +14,8 @@ public class OrderEntity implements Serializable{
 	
 	private String user;
 	
+	private String province;
+	
 	private String modifyTime;
 
 	public String getTotalPrice() {
@@ -56,13 +58,22 @@ public class OrderEntity implements Serializable{
 		this.modifyTime = modifyTime;
 	}
 	
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
 	@Override
     public String toString() {
         return "OrderEntity{" +
-                "orderCode='" + orderCode + '\'' +
-                ", totalPrice='" + totalPrice + '\'' +
+                "orderCode=" + orderCode  +
+                ", totalPrice=" + totalPrice  +
                 ", orderStatus=" + orderStatus +
                 ", user=" + user +
+                ", province=" + province +
                 ", modifyTime=" + modifyTime+
                 '}';
     } 

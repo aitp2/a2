@@ -73,7 +73,7 @@ public class RestClientFactoryBean extends AbstractFactoryBean<RestClient> {
         }
     }
 
-    @Value("${com.mms.cloud.hostnames:#{\"localhost:9200\"}}")
+    @Value("${com.mms.cloud.hostnames}")
     public void setHostnames(String[] hostnames) {
         this.hostnames = hostnames;
     }

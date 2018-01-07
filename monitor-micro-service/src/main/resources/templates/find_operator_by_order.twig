@@ -1,13 +1,13 @@
 {
   "version": true,
-  "_source": [ "orderStatus", "orderCode" ,"totalPrice","user","modifyTime"],
+  "_source": [ "orderStatus", "orderCode" ,"totalPrice","user","province","modifyTime"],
   "query": {
     "bool": {
       "must": [
         {
           "query_string": {
             "analyze_wildcard": true,
-            "query": "@timestamp:[{{queryStartDate}} TO {{queryEndDate}}]"
+            "query": "orderCode:{{orderCode}}"
           }
         },
         {

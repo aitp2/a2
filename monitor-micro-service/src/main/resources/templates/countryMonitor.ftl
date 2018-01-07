@@ -27,23 +27,8 @@ require.config({
  function (ec) {
 	var myChart = ec.init(document.getElementById('main'));
 	var ecConfig = require('echarts/config');
-	var data_yujing = [
-		     {name: '天津', value: 50},
-		     {name: '河北', value: 16},
-		     {name: '山西', value: 69},
-		     {name: '广东', value: 90},
-		     {name: '内蒙古', value: 5},
-		     {name: '辽宁', value: 0},
-		     {name: '浙江', value: 123}
-		];
-		var data_jinggao = [
-		     {name: '上海', value: 89},
-		     {name: '安徽', value: 1},
-		     {name: '山东', value: 5},
-		     {name: '海南', value: 38},
-		     {name: '广东', value: 120},
-		     {name: '浙江', value: 67}
-		];
+	var data_yujing =${yujing_json};
+	var data_jinggao =${jinggao_json};
 		
 		var geoCoordMap = {
 		    "北京": [116.46,39.92],

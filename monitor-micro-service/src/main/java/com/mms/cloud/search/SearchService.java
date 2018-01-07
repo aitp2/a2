@@ -114,7 +114,7 @@ public class SearchService {
         params.put("typed_keys", null);
         Response response = client.performRequest(
                 GET,
-                request.getIndexName() + "/_search",
+                request.getIndexName() + "/_search?size=10000",
                 params,
                 new StringEntity(request.createQuery(), Charset.defaultCharset()));
 

@@ -1,6 +1,21 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
+let Host
+
+if (process.env.NODE_ENV === 'production') {
+    Host = 'http://localhost:8088'
+} else if(process.env.NODE_ENV === 'testing'){
+    Host = 'http://localhost:8088'
+} else {
+  Host = 'http://localhost:8088'
+}
+
+function url(url) {
+  return Host + url
+}
+
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
