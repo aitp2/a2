@@ -168,6 +168,7 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 	 * @param province
 	 */
 	private void  calculateOrderStatusNum(String province){
+		ProvinceMap.reset();
 		List<OrderStatusMonitorDTO> list_orderStatusMonitorDTO = this.getOrderStatusMonitorData(province);
 		for(OrderStatusMonitorDTO orderStatusMonitorDTO:list_orderStatusMonitorDTO){
 			if((orderStatusMonitorDTO.getPayStatus()!=null&&orderStatusMonitorDTO.getPayStatus().equals(MonitorStatus.YUJING ))
