@@ -9,6 +9,9 @@ public class OrderStatusStatisticsDataDTO {
 	private String num;
 	
 	private String percentage;
+	
+	//统计显示grid比例参数
+	private String clom;
 
 	public String getProvince() {
 		return province;
@@ -40,6 +43,14 @@ public class OrderStatusStatisticsDataDTO {
 
 	public void setPercentage(String percentage) {
 		this.percentage = percentage;
+	}
+
+	public String getClom() {
+		return clom;
+	}
+
+	public void setClom(String clom) {
+		this.clom = clom;
 	}
 	
 }

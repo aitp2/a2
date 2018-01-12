@@ -14,13 +14,21 @@ public class OrderStatusMonitorDTO implements Serializable{
 	
 	private String province;
 	
-	private String modifyTime;
+	private String createTime;
 	
-	private String payStatus;
+	private String cancelFlag;
 	
-	private String sendStatus;
+	private String payStatus="";
 	
-	private String receviedStatus;
+	private String payTime="";
+	
+	private String sendStatus="";
+	
+	private String sendTime="";
+	
+	private String receviedStatus="";
+	
+	private String receviedTime="";
 
 	public String getTotalPrice() {
 		return totalPrice;
@@ -54,14 +62,6 @@ public class OrderStatusMonitorDTO implements Serializable{
 		this.province = province;
 	}
 
-	public String getModifyTime() {
-		return modifyTime;
-	}
-
-	public void setModifyTime(String modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-
 	public String getPayStatus() {
 		return payStatus;
 	}
@@ -84,6 +84,46 @@ public class OrderStatusMonitorDTO implements Serializable{
 
 	public void setReceviedStatus(String receviedStatus) {
 		this.receviedStatus = receviedStatus;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
+	}
+
+	public String getSendTime() {
+		return sendTime;
+	}
+
+	public void setSendTime(String sendTime) {
+		this.sendTime = sendTime;
+	}
+
+	public String getReceviedTime() {
+		return receviedTime;
+	}
+
+	public void setReceviedTime(String receviedTime) {
+		this.receviedTime = receviedTime;
+	}
+
+	public String getCancelFlag() {
+		return cancelFlag;
+	}
+
+	public void setCancelFlag(String cancelFlag) {
+		this.cancelFlag = cancelFlag;
 	}
 
 }

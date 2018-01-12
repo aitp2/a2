@@ -185,6 +185,12 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
         
+        <dependency>
+			<groupId>org.nutz</groupId>
+			<artifactId>nutz</artifactId>
+			<version>1.r.60</version>
+		</dependency>
+        
   </dependencies>
   
   <!-- build项目 -->

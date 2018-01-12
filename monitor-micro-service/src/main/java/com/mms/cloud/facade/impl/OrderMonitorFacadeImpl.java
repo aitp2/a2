@@ -1,6 +1,8 @@
 package com.mms.cloud.facade.impl;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,36 +81,63 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 		OrderStatusStatisticsDataDTO dto_nomarl = new OrderStatusStatisticsDataDTO();
 		OrderStatusStatisticsDataDTO dto_yujing = new OrderStatusStatisticsDataDTO();
 		OrderStatusStatisticsDataDTO dto_jinggao = new OrderStatusStatisticsDataDTO();
+		DecimalFormat clonm_nf=new DecimalFormat("0");
 		NumberFormat nf   =   NumberFormat.getPercentInstance();
+		clonm_nf.setMaximumFractionDigits(0);
 		if(province == null || province.equals("")){
 			int all = ProvinceMap.china_namarl+ProvinceMap.china_yujing+ProvinceMap.china_jinggao;
 			dto_nomarl.setStatus(MonitorStatus.NOMARL);
 			dto_nomarl.setProvince("china");
 			dto_nomarl.setNum(ProvinceMap.china_namarl.toString());
-			dto_nomarl.setPercentage(nf.format(ProvinceMap.china_namarl/all));
+			dto_nomarl.setPercentage(nf.format((float)ProvinceMap.china_namarl/all));
+			dto_nomarl.setClom(clonm_nf.format(24*(float)ProvinceMap.china_namarl/all));
 			dto_yujing.setStatus(MonitorStatus.YUJING);
 			dto_yujing.setProvince("china");
 			dto_yujing.setNum(ProvinceMap.china_yujing.toString());
-			dto_yujing.setPercentage(nf.format(ProvinceMap.china_yujing/all));
+			dto_yujing.setPercentage(nf.format((float)ProvinceMap.china_yujing/all));
+			dto_yujing.setClom(clonm_nf.format(24*(float)ProvinceMap.china_yujing/all));
 			dto_jinggao.setStatus(MonitorStatus.JINGGAO);
 			dto_jinggao.setProvince("china");
 			dto_jinggao.setNum(ProvinceMap.china_jinggao.toString());
-			dto_jinggao.setPercentage(nf.format(ProvinceMap.china_jinggao/all));
+			dto_jinggao.setPercentage(nf.format((float)ProvinceMap.china_jinggao/all));
+			dto_jinggao.setClom( new Integer(24 - new Integer(dto_nomarl.getClom())-new Integer(dto_yujing.getClom())).toString());
 		}else{
 			int all = ProvinceMap.province_nomarl.get(province)+
 					ProvinceMap.province_yujing.get(province)+ProvinceMap.province_jinggao.get(province);
-			dto_nomarl.setStatus(MonitorStatus.NOMARL);
-			dto_nomarl.setProvince(province);
-			dto_nomarl.setNum(ProvinceMap.province_nomarl.get(province).toString());
-			dto_nomarl.setPercentage(nf.format(ProvinceMap.province_nomarl.get(province)/all));
-			dto_yujing.setStatus(MonitorStatus.YUJING);
-			dto_yujing.setProvince(province);
-			dto_yujing.setNum(ProvinceMap.province_yujing.get(province).toString());
-			dto_yujing.setPercentage(nf.format(ProvinceMap.province_yujing.get(province)/all));
-			dto_jinggao.setStatus(MonitorStatus.JINGGAO);
-			dto_jinggao.setProvince(province);
-			dto_jinggao.setNum(ProvinceMap.province_jinggao.get(province).toString());
-			dto_jinggao.setPercentage(nf.format(ProvinceMap.province_jinggao.get(province)/all));
+			if(all > 0 ){
+				dto_nomarl.setStatus(MonitorStatus.NOMARL);
+				dto_nomarl.setProvince(province);
+				dto_nomarl.setNum(ProvinceMap.province_nomarl.get(province).toString());
+				dto_nomarl.setPercentage(nf.format((float)ProvinceMap.province_nomarl.get(province)/all));
+				dto_nomarl.setClom(clonm_nf.format(24*(float)ProvinceMap.province_nomarl.get(province)/all));
+				dto_yujing.setStatus(MonitorStatus.YUJING);
+				dto_yujing.setProvince(province);
+				dto_yujing.setNum(ProvinceMap.province_yujing.get(province).toString());
+				dto_yujing.setPercentage(nf.format((float)ProvinceMap.province_yujing.get(province)/all));
+				dto_yujing.setClom(clonm_nf.format(24*(float)ProvinceMap.province_yujing.get(province)/all));
+				dto_jinggao.setStatus(MonitorStatus.JINGGAO);
+				dto_jinggao.setProvince(province);
+				dto_jinggao.setNum(ProvinceMap.province_jinggao.get(province).toString());
+				dto_jinggao.setPercentage(nf.format((float)ProvinceMap.province_jinggao.get(province)/all));
+				dto_jinggao.setClom( new Integer(24 - new Integer(dto_nomarl.getClom())-new Integer(dto_yujing.getClom())).toString());
+			}else{
+				dto_nomarl.setStatus(MonitorStatus.NOMARL);
+				dto_nomarl.setProvince(province);
+				dto_nomarl.setNum(ProvinceMap.province_nomarl.get(province).toString());
+				dto_nomarl.setPercentage("100%");
+				dto_nomarl.setClom("24");
+				dto_yujing.setStatus(MonitorStatus.YUJING);
+				dto_yujing.setProvince(province);
+				dto_yujing.setNum(ProvinceMap.province_yujing.get(province).toString());
+				dto_yujing.setPercentage("0%");
+				dto_yujing.setClom("0");
+				dto_jinggao.setStatus(MonitorStatus.JINGGAO);
+				dto_jinggao.setProvince(province);
+				dto_jinggao.setNum(ProvinceMap.province_jinggao.get(province).toString());
+				dto_jinggao.setPercentage("0%");
+				dto_jinggao.setClom("0");
+			}
+			
 		}
 		list.add(dto_jinggao);
 		list.add(dto_yujing);
@@ -141,15 +170,15 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 			orderStatusMonitorDTO.setProvince(list_orderStatusList.get(0).getProvince());
 			orderStatusMonitorDTO.setTotalPrice(list_orderStatusList.get(0).getTotalPrice());
 			orderStatusMonitorDTO.setUser(list_orderStatusList.get(0).getUser());
-			orderStatusMonitorDTO.setModifyTime(list_orderStatusList.get(0).getModifyTime());//此处待优化取最后一个
 			//判断是否为取消
-			boolean cancel_flag = false;
+			String cancel_flag = "false";
 			for(OrderEntity orderEntity:list_orderStatusList){
 				if(orderEntity.getOrderStatus().equals(OrderStatus.CANCELLED)){
-					cancel_flag = true;
+					cancel_flag = "true";
 				}
 			}
-			if(cancel_flag==false){
+			orderStatusMonitorDTO.setCancelFlag(cancel_flag);
+			if(cancel_flag.equals("false")){
 				orderStatusMonitorDTO.setPayStatus(this.calculatePayStatusAccordingRule(list_orderStatusList));
 				if(orderStatusMonitorDTO.getPayStatus().equals(MonitorStatus.NOMARL)){
 					orderStatusMonitorDTO.setSendStatus(this.calculateSendStatusAccordingRule(list_orderStatusList));
@@ -158,6 +187,8 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 					}
 				}
 			}
+			//设置时间
+			this.setTimeForOrder(orderStatusMonitorDTO,list_orderStatusList);
 			list_orderStatusMonitorDTO.add(orderStatusMonitorDTO);
 		}
 		return  list_orderStatusMonitorDTO;
@@ -165,36 +196,69 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 	
 	/**
 	 * 计算各状态数量，保存到内存
+	 * 当查询全国数据时，缓存全部清除设置；当查询省份时，仅重新设置省份数据
 	 * @param province
 	 */
 	private void  calculateOrderStatusNum(String province){
-		ProvinceMap.reset();
+		ProvinceMap.reset(province);
 		List<OrderStatusMonitorDTO> list_orderStatusMonitorDTO = this.getOrderStatusMonitorData(province);
 		for(OrderStatusMonitorDTO orderStatusMonitorDTO:list_orderStatusMonitorDTO){
 			if((orderStatusMonitorDTO.getPayStatus()!=null&&orderStatusMonitorDTO.getPayStatus().equals(MonitorStatus.YUJING ))
 					||(orderStatusMonitorDTO.getSendStatus()!=null&&orderStatusMonitorDTO.getSendStatus().equals(MonitorStatus.YUJING))
 					||(orderStatusMonitorDTO.getReceviedStatus()!=null&&orderStatusMonitorDTO.getReceviedStatus().equals(MonitorStatus.YUJING))){
 				ProvinceMap.province_yujing.put(orderStatusMonitorDTO.getProvince(), 
-						ProvinceMap.province_yujing.get(orderStatusMonitorDTO.getProvince())+1);
+						ProvinceMap.province_yujing.get(orderStatusMonitorDTO.getProvince())==null?0:ProvinceMap.province_yujing.get(orderStatusMonitorDTO.getProvince())+1);
+				ProvinceMap.province_yujing_order.get(orderStatusMonitorDTO.getProvince()).add(orderStatusMonitorDTO);
 				
 			}else if((orderStatusMonitorDTO.getSendStatus()!=null&&orderStatusMonitorDTO.getSendStatus().equals(MonitorStatus.JINGGAO))
 					||(orderStatusMonitorDTO.getReceviedStatus()!=null&&orderStatusMonitorDTO.getReceviedStatus().equals(MonitorStatus.JINGGAO))){
 				ProvinceMap.province_jinggao.put(orderStatusMonitorDTO.getProvince(), 
-						ProvinceMap.province_jinggao.get(orderStatusMonitorDTO.getProvince())+1);
+						ProvinceMap.province_jinggao.get(orderStatusMonitorDTO.getProvince())==null?0:ProvinceMap.province_jinggao.get(orderStatusMonitorDTO.getProvince())+1);
+				ProvinceMap.province_jinggao_order.get(orderStatusMonitorDTO.getProvince()).add(orderStatusMonitorDTO);
 			}else{
 				ProvinceMap.province_nomarl.put(orderStatusMonitorDTO.getProvince(), 
-						ProvinceMap.province_nomarl.get(orderStatusMonitorDTO.getProvince())+1);
+						ProvinceMap.province_nomarl.get(orderStatusMonitorDTO.getProvince())==null?0:ProvinceMap.province_nomarl.get(orderStatusMonitorDTO.getProvince())+1);
+				ProvinceMap.province_nomarl_order.get(orderStatusMonitorDTO.getProvince()).add(orderStatusMonitorDTO);
 			}
 		}
-		for(String provice:ProvinceMap.province_nomarl.keySet()){
-			ProvinceMap.china_namarl = ProvinceMap.china_namarl +ProvinceMap.province_nomarl.get(provice);
+		
+		if(province == null || province.equals("china")){
+			for(String provice:ProvinceMap.province_nomarl.keySet()){
+				ProvinceMap.china_namarl = ProvinceMap.china_namarl +ProvinceMap.province_nomarl.get(provice);
+				ProvinceMap.china_nomarl_order.addAll(ProvinceMap.province_nomarl_order.get(provice));
+			}
+			for(String provice:ProvinceMap.province_yujing.keySet()){
+				ProvinceMap.china_yujing = ProvinceMap.china_yujing +ProvinceMap.province_yujing.get(provice);
+				ProvinceMap.china_yujing_order.addAll(ProvinceMap.province_yujing_order.get(provice));
+			}
+			for(String provice:ProvinceMap.province_jinggao.keySet()){
+				ProvinceMap.china_jinggao = ProvinceMap.china_jinggao +ProvinceMap.province_jinggao.get(provice);
+				ProvinceMap.china_jinggao_order.addAll(ProvinceMap.province_jinggao_order.get(provice));
+			}
 		}
-		for(String provice:ProvinceMap.province_yujing.keySet()){
-			ProvinceMap.china_yujing = ProvinceMap.china_yujing +ProvinceMap.province_yujing.get(provice);
+	}
+	
+	/**
+	 * 设置状态时间
+	 * @param orderStatusMonitorDTO
+	 * @param list_orderStatusList
+	 */
+	private void setTimeForOrder(OrderStatusMonitorDTO orderStatusMonitorDTO,List<OrderEntity> list_orderStatusList){
+		for(OrderEntity orderEntity:list_orderStatusList){
+			if(orderEntity.getOrderStatus().equals(OrderStatus.CREATED)){
+				orderStatusMonitorDTO.setCreateTime(orderEntity.getModifyTime().substring(0, 16));
+			}
+			if(orderEntity.getOrderStatus().equals(OrderStatus.PAYED)){
+				orderStatusMonitorDTO.setPayTime(orderEntity.getModifyTime().substring(0, 16));
+			}
+			if(orderEntity.getOrderStatus().equals(OrderStatus.SENT)){
+				orderStatusMonitorDTO.setSendTime(orderEntity.getModifyTime().substring(0, 16));
+			}
+			if(orderEntity.getOrderStatus().equals(OrderStatus.RECEIVED)){
+				orderStatusMonitorDTO.setReceviedTime(orderEntity.getModifyTime().substring(0, 16));
+			}
 		}
-		for(String provice:ProvinceMap.province_jinggao.keySet()){
-			ProvinceMap.china_jinggao = ProvinceMap.china_jinggao +ProvinceMap.province_jinggao.get(provice);
-		}
+		
 	}
 	
 	/**
