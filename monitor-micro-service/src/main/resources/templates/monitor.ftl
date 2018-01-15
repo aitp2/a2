@@ -354,11 +354,11 @@ require.config({
                     mapSeries.data[p].selected=selected[name];  
                     if (selected[name]) {
                     	haveSelect = true;
-  						window.location.href="countryMonitor?province="+name;
+  						window.location.href="monitor?province="+name;
                     }
                 }  
                 if(haveSelect == false){
-                	window.location.href="countryMonitor";
+                	window.location.href="monitor";
                 }
             });         
             
@@ -411,6 +411,9 @@ require.config({
 			  });
     }
     
+    function statusMonitor(province,status){
+	    window.location.href = 'monitor?province='+province+'&status='+status;
+    }
     </script>
  
   <style id="erd_scroll_detection_scrollbar_style">/* Created by the element-resize-detector library. */
@@ -498,20 +501,22 @@ require.config({
 		  <div class="ant-card-head">
             <div class="ant-card-head-wrapper">
              <div class="ant-card-head-title">
-              ${proviceName}各状态订单比例
+              
+              <a href="javascript:void(0);" onclick="statusMonitor('${proviceName}','')" style="color:black">${proviceName}各状态订单比例</a>
+			
              </div>
             </div>
            </div>
 		  <section class="code-box-demo" style="margin-bottom: 24px;">
 		   <div class="ant-row">
 			<div class="ant-col-xs-${nomarlColm} ant-col-sm-${nomarlColm} ant-col-md-${nomarlColm} ant-col-lg-${nomarlColm} ant-col-xl-${nomarlColm}" style="background: #3CB371;height:25px" align="center" >
-            	<a href="javascript:void(0);" onclick="window.location.href('countryMonitor?province=${proviceName}&status=NOMARL');" style="color:black">正常(${nomarlNum})${nomarlPercentage}</a>
+            	<a href="javascript:void(0);" onclick="statusMonitor('${proviceName}','NOMARL')" style="color:black">正常(${nomarlNum})${nomarlPercentage}</a>
 			</div>
 			<div class="ant-col-xs-${yujingColm} ant-col-sm-${yujingColm} ant-col-md-${yujingColm} ant-col-lg-${yujingColm} ant-col-xl-${yujingColm}" style="background:#FFD700;height:25px" align="center" >
-				<a href="javascript:void(0);" onclick="window.location.href('countryMonitor?province=${proviceName}&status=YUJING');" style="color:black">预警(${yujingNum})${yujingPercentage}</a>
+				<a href="javascript:void(0);" onclick="statusMonitor('${proviceName}','YUJING')" style="color:black">预警(${yujingNum})${yujingPercentage}</a>
 			</div>
 			<div class="ant-col-xs-${jinggaoColm} ant-col-sm-${jinggaoColm} ant-col-md-${jinggaoColm} ant-col-lg-${jinggaoColm} ant-col-xl-${jinggaoColm}" style="background:#FF4500;height:25px" align="center" >
-				<a href="javascript:void(0);" onclick="window.location.href('countryMonitor?province=${proviceName}&status=JINGGAO');" style="color:black">警告(${jinggaoNum})${jinggaoPercentage}</a>
+				<a href="javascript:void(0);" onclick="statusMonitor('${proviceName}','JINGGAO')" style="color:black">警告(${jinggaoNum})${jinggaoPercentage}</a>
 			</div>
 		   </div>
 		  </section>
@@ -587,7 +592,7 @@ require.config({
                </div>
               </div>
               
-              <div class="ant-steps-item <#if orderStatusMonitorDTO.receviedStatus == 'NOMARL' > ant-steps-item-finish</#if><#if orderStatusMonitorDTO.sendStatus == '' > ant-steps-item-wait</#if><#if orderStatusMonitorDTO.receviedStatus == 'YUJING' > ant-steps-item-orderyujing</#if><#if orderStatusMonitorDTO.receviedStatus == 'JINGGAO' > ant-steps-item-orderjinggao</#if>">
+              <div class="ant-steps-item <#if orderStatusMonitorDTO.receviedStatus == 'NOMARL' > ant-steps-item-finish</#if><#if orderStatusMonitorDTO.sendStatus == '' || orderStatusMonitorDTO.sendStatus == 'YUJING' || orderStatusMonitorDTO.sendStatus == 'JINGGAO'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.receviedStatus == 'YUJING' > ant-steps-item-orderyujing</#if><#if orderStatusMonitorDTO.receviedStatus == 'JINGGAO' > ant-steps-item-orderjinggao</#if>">
                <div class="ant-steps-item-tail"></div>
                <div class="ant-steps-item-icon">
                 <span class="ant-steps-icon"><span class="ant-steps-icon-dot"></span></span>

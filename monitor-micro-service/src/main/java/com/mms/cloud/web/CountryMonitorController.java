@@ -151,9 +151,9 @@ public class CountryMonitorController {
 		
 		//订单状态数据getOrderStatusMonitorData  页面设置订单状态
 		List<OrderStatusMonitorDTO> list_monitorOrder = new ArrayList<OrderStatusMonitorDTO>();
-		if(province == null){
+		if(province == null || province.equals("")){
 			//全国全状态
-			if(status == null){
+			if(status == null || status.equals("")){
 				list_monitorOrder.addAll(ProvinceMap.china_nomarl_order);
 				list_monitorOrder.addAll(ProvinceMap.china_yujing_order);
 				list_monitorOrder.addAll(ProvinceMap.china_jinggao_order);
@@ -174,7 +174,7 @@ public class CountryMonitorController {
 		
 		else{
 			//某省全状态
-			if(status == null){
+			if(status == null || status.equals("")){
 				list_monitorOrder.addAll(ProvinceMap.province_nomarl_order.get(province));
 				list_monitorOrder.addAll(ProvinceMap.province_yujing_order.get(province));
 				list_monitorOrder.addAll(ProvinceMap.province_jinggao_order.get(province));
@@ -193,7 +193,7 @@ public class CountryMonitorController {
 			}
 		}
 		if(province == null){
-			map.addAttribute("proviceName", "全国");
+			map.addAttribute("proviceName", "china");
 		}else{
 			map.addAttribute("proviceName", province);
 		}
