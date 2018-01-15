@@ -52,16 +52,15 @@ public class A2CommercePlaceOrderMethodHook extends CommercePlaceQuoteOrderMetho
 		final boolean issuccess = a2PlaceOrderPaymentCheck.setStatus(order.getCode());
 		if(issuccess)
 		{
-			order.setStatus(OrderStatus.PAID);
-			order.setPaymentStatus(PaymentStatus.PAID);
+			
 			LOG.info("order status: PAID, total price:"+
 					order.getTotalPrice()+", order code:"+order.getCode()+", user:"+order.getUser().getUid());
 		}
 		else
 		{
-			order.setStatus(OrderStatus.PAIDFAIL);
+			order.setStatus(OrderStatus.CREATED);
 			order.setPaymentStatus(PaymentStatus.NOTPAID);
-			LOG.info("order status: PAIDFAIL, total price:"+
+			LOG.info("order status: CREATED, total price:"+
 					order.getTotalPrice()+", order code:"+order.getCode()+", user:"+order.getUser().getUid());
 		}
 		modelService.save(order);

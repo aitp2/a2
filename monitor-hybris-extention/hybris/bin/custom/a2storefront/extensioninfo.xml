@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
+	<extension abstractclassprefix="Generated" classprefix="A2storefront" name="a2storefront" usemaven="false">		
+        
+			<requires-extension name="checkboxconfiguratortemplateaddon"/>
+			<requires-extension name="adaptivesearchsamplesaddon"/>
+			<requires-extension name="orderselfserviceaddon"/>
+			<requires-extension name="customerticketingaddon"/>
+			<requires-extension name="assistedservicepromotionaddon"/>
+			<requires-extension name="assistedservicestorefront"/>
+			<requires-extension name="textfieldconfiguratortemplateaddon"/>
+			<requires-extension name="smarteditaddon"/>
+			<requires-extension name="promotionenginesamplesaddon"/>
+			<requires-extension name="commerceorgsamplesaddon"/>
+			<requires-extension name="liveeditaddon"/>
+			<requires-extension name="acceleratorstorefrontcommons"/>
+		<requires-extension name="yacceleratorfacades"/>
+		      <requires-extension name="commercefacades"/>
+       <requires-extension name="a2util"/>
+       <requires-extension name="a2core"/>
+        <requires-extension name="a2facade"/>
+
+		<webmodule jspcompile="false" webroot="/a2storefront"/>
+
+		<meta key="modulegen-name" value="accelerator"/>
+		
+
+	</extension>
+
+</extensioninfo>

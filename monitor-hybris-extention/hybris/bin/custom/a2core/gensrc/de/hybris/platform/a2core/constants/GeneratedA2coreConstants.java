@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Dec 28, 2017 9:56:36 AM                     ---
+ * --- Generated at Jan 15, 2018 10:55:02 AM                    ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -25,6 +25,16 @@ package de.hybris.platform.a2core.constants;
 public class GeneratedA2coreConstants
 {
 	public static final String EXTENSIONNAME = "a2core";
+	public static class Attributes
+	{
+		public static class AbstractOrder
+		{
+			public static final String ISPAIDORSHIPPED = "isPaidOrShipped".intern();
+			public static final String ORDERS = "orders".intern();
+			public static final String ORIGINORDER = "originOrder".intern();
+			public static final String PICKNOTE = "pickNote".intern();
+		}
+	}
 	public static class Enumerations
 	{
 		public static class OrderStatus
@@ -32,7 +42,14 @@ public class GeneratedA2coreConstants
 			public static final String SAPBACK = "SAPBACK".intern();
 			public static final String PAID = "PAID".intern();
 			public static final String PAIDFAIL = "PAIDFAIL".intern();
+			public static final String SHIPPED = "SHIPPED".intern();
+			public static final String SENT = "SENT".intern();
+			public static final String RECEIVED = "RECEIVED".intern();
 		}
+	}
+	public static class Relations
+	{
+		public static final String ORIGINORDERRELATION = "OriginOrderRelation".intern();
 	}
 	
 	protected GeneratedA2coreConstants()

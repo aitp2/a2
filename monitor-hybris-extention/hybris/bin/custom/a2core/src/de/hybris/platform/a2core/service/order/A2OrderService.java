@@ -22,4 +22,8 @@ import de.hybris.platform.order.OrderService;
 public interface A2OrderService extends OrderService
 {
 	SearchPageData<OrderModel> findUnpaidOrders(PageableData pageableData);
+	
+	SearchPageData<OrderModel> findPaidOrders(PageableData pageableData);
+	
+	boolean confirmReceipt(final String orderCode);
 }

@@ -94,9 +94,22 @@
 	<bean id="defultA2OrderStatusClient" parent="a2RestfulClient" class="de.hybris.platform.a2core.outbound.sap.impl.A2OrderStatusClientImpl">
 	</bean>
 	
+	<alias name="a2DeliveryClient" alias="a2DeliveryClient"/>
+	<bean id="a2DeliveryClient" parent="a2RestfulClient" class="de.hybris.platform.a2core.outbound.sap.impl.A2DeliveryClientImpl">
+	</bean>
+	
 	<alias name="a2PlaceOrderPaymentCheck" alias="a2PlaceOrderPaymentCheck"/>
 	<bean id="a2PlaceOrderPaymentCheck" class="de.hybris.platform.a2core.service.order.consignment.impl.A2PlaceOrderPaymentCheckImpl" >
 		<property name="a2OrderStatusClient" ref="a2OrderStatusClient" />
+		<property name="a2OrderDao" ref="a2OrderDao"/>
+		 <property name="modelService" ref="modelService"/>
+	</bean>
+	
+	<alias name="a2DeliveryCheck" alias="a2DeliveryCheck"/>
+	<bean id="a2DeliveryCheck" class="de.hybris.platform.a2core.service.order.consignment.impl.A2DeliveryCheckImpl" >
+		<property name="a2DeliveryClient" ref="a2DeliveryClient" />
+		 <property name="a2OrderDao" ref="a2OrderDao"/>
+		 <property name="modelService" ref="modelService"/>
 	</bean>
 	
 	<alias name="a2CommercePlaceOrderMethodHook" alias="commercePlaceQuoteOrderMethodHook"/>
@@ -106,20 +119,32 @@
 		<property name="modelService" ref="modelService"/>
 	</bean>
 
+
+	<alias name="a2CommercePlaceOrderStrategy" alias="commercePlaceOrderStrategy"/>
+	<bean id="a2CommercePlaceOrderStrategy" class="de.hybris.platform.a2core.order.impl.A2CommercePlaceOrderStrategy" 
+		parent="defaultCommercePlaceOrderStrategy">
+		<property name="calculationService" ref="calculationService" />
+	</bean>
 	
 	<alias name="a2OrderDao" alias="a2OrderDao"/>
 	<bean id="a2OrderDao" class="de.hybris.platform.a2core.dao.order.impl.A2OrderDaoImpl" parent="defaultOrderDao">
 		<property name="pagedFlexibleSearchService" ref="pagedFlexibleSearchService" />
 	</bean>
 		
-	<alias name="a2OrderService" alias="a2orderService"/>
+	<alias name="a2OrderService" alias="a2OrderService"/>
 	<bean id="a2OrderService" class="de.hybris.platform.a2core.service.order.impl.A2OrderServiceImpl" parent="defaultOrderService">
 		 <property name="a2OrderDao" ref="a2OrderDao"/>
+		 <property name="modelService" ref="modelService"/>
 	</bean>
 	
 	<bean id="a2OrderPaymentCheckJob" class="de.hybris.platform.a2core.cronjob.A2OrderPaymentCheckJob" parent="abstractJobPerformable" >
-		<property name="orderService" ref="a2orderService" />
+		<property name="orderService" ref="a2OrderService" />
 		<property name="a2PlaceOrderPaymentCheck" ref="a2PlaceOrderPaymentCheck" />
+	</bean>
+	
+	<bean id="a2SendOrderToSAPNoticeDeliveryJob" class="de.hybris.platform.a2core.cronjob.A2SendOrderToSAPNoticeDeliveryJob" parent="abstractJobPerformable" >
+		<property name="orderService" ref="a2OrderService" />
+		<property name="a2DeliveryCheck" ref="a2DeliveryCheck" />
 	</bean>
 			
 </beans>

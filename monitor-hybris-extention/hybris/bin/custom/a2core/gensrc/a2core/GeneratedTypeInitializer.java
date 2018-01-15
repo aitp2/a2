@@ -46,6 +46,12 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		// performCreateTypes
 	
 	
+		createRelationType(
+			"OriginOrderRelation",
+			null,
+			true
+		);
+	
 	}
 
 	/**
@@ -59,9 +65,67 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 	
 	
+				single_createattr_AbstractOrder_pickNote();
+			
+				single_createattr_AbstractOrder_isPaidOrShipped();
+			
+		createRelationAttributes(
+			"OriginOrderRelation", 
+			false, 
+
+			"orders", 
+			"AbstractOrder", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.SET,
+			"originOrder", 
+			"AbstractOrder", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION
+		);
+	
 
 	}
 
+	
+	public void single_createattr_AbstractOrder_pickNote() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"AbstractOrder", 
+					"pickNote",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_AbstractOrder_isPaidOrShipped() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"AbstractOrder", 
+					"isPaidOrShipped",  
+					null,
+					"java.lang.Boolean",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
 	
 
 
@@ -81,10 +145,46 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				"SAPBACK",
 				"PAID",
-				"PAIDFAIL"
+				"PAIDFAIL",
+				"SHIPPED",
+				"SENT",
+				"RECEIVED"
 			} )
 		);
 	
+		single_setRelAttributeProperties_OriginOrderRelation_source();
+	
+		single_setRelAttributeProperties_OriginOrderRelation_target();
+	
+		connectRelation(
+			"OriginOrderRelation", 
+			false, 
+			"orders", 
+			"AbstractOrder", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"originOrder", 
+			"AbstractOrder", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+				{
+				Map customPropsMap = new HashMap();
+				
+				changeMetaType(
+					"AbstractOrder",
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_AbstractOrder_pickNote();
+		
+			single_setAttributeProperties_AbstractOrder_isPaidOrShipped();
+		
 				changeMetaType(
 					"OrderStatus",
 					null,
@@ -95,6 +195,92 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 
 		
+						public void single_setAttributeProperties_AbstractOrder_pickNote() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"AbstractOrder", 
+								"pickNote",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_AbstractOrder_isPaidOrShipped() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"AbstractOrder", 
+								"isPaidOrShipped",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+								public void single_setRelAttributeProperties_OriginOrderRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"AbstractOrder", 
+										"orders",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_OriginOrderRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"AbstractOrder", 
+										"originOrder",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
 }
 
 	

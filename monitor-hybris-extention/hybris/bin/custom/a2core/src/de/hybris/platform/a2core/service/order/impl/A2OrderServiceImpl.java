@@ -28,27 +28,60 @@ import de.hybris.platform.core.model.type.ComposedTypeModel;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.order.impl.DefaultOrderService;
+import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.util.DiscountValue;
 import de.hybris.platform.util.TaxValue;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 /**
  *
  */
 public class A2OrderServiceImpl extends DefaultOrderService implements A2OrderService
 {
-	
+	private static final Logger LOG = Logger.getLogger(A2OrderServiceImpl.class);
 	private A2OrderDaoImpl a2OrderDao;
+	private ModelService modelService;
 	
 
+	@Override
+	public boolean confirmReceipt(String orderCode){
+		OrderModel order = a2OrderDao.getOrderByCode(orderCode);
+		try
+		{
+			order.setStatus(OrderStatus.RECEIVED);
+			
+			modelService.save(order);
+			
+			LOG.info("order status:"+order.getStatus().getCode()+", total price:"+
+					order.getTotalPrice()+", order code:"+order.getCode()+", user:"+order.getUser().getUid());
+	
+			return true;
+		}
+		catch (Exception e)
+		{
+			LOG.info("order status:"+order.getStatus().getCode()+", total price:"+
+					order.getTotalPrice()+", order code:"+order.getCode()+", user:"+order.getUser().getUid());
+	
+			// YTODO: handle exception
+			return false;
+		}
+	}
+	
 	@Override
 	public SearchPageData<OrderModel> findUnpaidOrders(PageableData pageableData){
 		
 		return getA2OrderDao().findUnPayOrders(pageableData, null);
 	}
 
+	@Override
+	public SearchPageData<OrderModel> findPaidOrders(PageableData pageableData){
+		
+		return getA2OrderDao().findPaidOrders(pageableData, null);
+	}
+	
 	@Override
 	public OrderModel createOrderFromCart(CartModel cart) throws InvalidCartException
 	{
@@ -200,5 +233,22 @@ public class A2OrderServiceImpl extends DefaultOrderService implements A2OrderSe
 	{
 		this.a2OrderDao = a2OrderDao;
 	}
+
+	/**
+	 * @return the modelService
+	 */
+	public ModelService getModelService()
+	{
+		return modelService;
+	}
+
+	/**
+	 * @param modelService the modelService to set
+	 */
+	public void setModelService(ModelService modelService)
+	{
+		this.modelService = modelService;
+	}
+	
 
 }

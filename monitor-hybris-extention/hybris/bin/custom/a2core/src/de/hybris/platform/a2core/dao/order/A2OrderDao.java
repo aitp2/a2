@@ -22,4 +22,6 @@ import de.hybris.platform.order.daos.OrderDao;
 public interface A2OrderDao extends OrderDao
 {
 	SearchPageData<OrderModel> findUnPayOrders(final PageableData pageableData, Integer notPaidDays);
+	SearchPageData<OrderModel> findPaidOrders(final PageableData pageableData, Integer notPaidDays);
+	public OrderModel getOrderByCode(String orderCode);
 }

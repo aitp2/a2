@@ -26,6 +26,7 @@ import de.hybris.platform.a2core.service.order.consignment.A2PlaceOrderPaymentCh
 import de.hybris.platform.a2core.service.order.impl.A2OrderServiceImpl;
 import de.hybris.platform.commerceservices.search.pagedata.PageableData;
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
+import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 
 import org.apache.log4j.Logger;
@@ -78,7 +79,7 @@ public class A2OrderPaymentCheckJob extends AbstractJobPerformable<CronJobModel>
 				}
 				else
 				{
-					LOG.info("order status: PAIDFAIL, total price:"+
+					LOG.info("order status: CREATED, total price:"+
 							order.getTotalPrice()+", order code:"+order.getCode()+", user:"+order.getUser().getUid());
 				}
 			}	
