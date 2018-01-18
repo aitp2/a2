@@ -241,7 +241,7 @@ require.config({
 	            markPoint : {
 	              symbol:'pin',
 	               symbolSize: function (val) {
-	                return (val[2]+30) / 10;
+	                return (val[2]+30)/2;
 	               },  
 	               label: {
 	                normal: {
@@ -276,7 +276,7 @@ require.config({
 	            markPoint : {
 	                symbol:'Circle',
 	                 symbolSize: function (val) {
-	                     return (val[2]+50) / 10;
+	                     return (val[2]+50) / 2;
 	            },
 	                effect : {
 	                    show: true,
@@ -313,7 +313,7 @@ require.config({
 	            markPoint : {
 	                symbol:'Circle',
 	                symbolSize: function (val) {
-	                     return (val[2]+30) / 10;
+	                     return (val[2]+30)/2 ;
 	            },
 	             label: {
 	                normal: {
