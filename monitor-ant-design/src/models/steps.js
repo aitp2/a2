@@ -4,26 +4,25 @@ export default {
   namespace: 'steps',
 
   state: {
-    list: [],
-    loading: false,
-    steps: {},
-  },
+	    list: [],
+	    loading: true,
+	  },
 
   effects: {
-    *fetch(_, { call, put }) {
+    *fetchList(_, { call, put }) {
       yield put({
         type: 'changeLoading',
         payload: true,
       });
       const response = yield call(stepData);
       yield put({
-        type: 'save',
-        payload: response,
-      });
-      yield put({
-        type: 'changeLoading',
-        payload: false,
-      });
+          type: 'saveList',
+          payload: Array.isArray(response) ? response : [],
+        });
+        yield put({
+          type: 'changeLoading',
+          payload: false,
+        });
     },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(stepData);
