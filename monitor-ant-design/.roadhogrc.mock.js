@@ -85,5 +85,7 @@ const proxy = {
 
 export default {
 'GET /api/stepdata/(.*)': 'http://localhost:8888/api/stepdata/mock',
+	//{[{"current":"1","desc_create":"2018-02-20 13:40","desc_pay":"2018-02-20 13:40","desc_send":"2018-02-20 13:40","desc_sign":"2018-02-20 13:40","memo":"-"},{"current":"2","desc_create":"2018-02-20 13:40","desc_pay":"2018-02-20 13:40","desc_send":"2018-02-20 13:40","desc_sign":"2018-02-20 13:40","memo":"不通过原因"},{"current":"3","desc_create":"2018-02-20 13:40","desc_pay":"2018-02-20 13:40","desc_send":"2018-02-20 13:40","desc_sign":"2018-02-20 13:40","memo":"-"},{"current":"0","desc_create":"2018-02-20 13:40","desc_pay":"2018-02-20 13:40","desc_send":"2018-02-20 13:40","desc_sign":"2018-02-20 13:40","memo":"很棒"}]}
 'GET /api/profile/(.*)': 'http://localhost:8888/api/profile/advanced',
+	//{"advancedOperation1":[{"key":"op1","type":"订购关系生效","name":"曲丽丽","status":"agree","updatedAt":"2017-10-03  19:23:12","memo":"-"},{"key":"op2","type":"财务复审","name":"付小小","status":"reject","updatedAt":"2017-10-03  19:23:12","memo":"不通过原因"},{"key":"op3","type":"部门初审","name":"周毛毛","status":"agree","updatedAt":"2017-10-03  19:23:12","memo":"-"},{"key":"op4","type":"提交订单","name":"林东东","status":"agree","updatedAt":"2017-10-03  19:23:12","memo":"很棒"},{"key":"op5","type":"创建订单","name":"汗东东","status":"agree","updatedAt":"2017-10-03  19:23:12","memo":"-"}]}
 };
