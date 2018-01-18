@@ -150,6 +150,51 @@ public class CountryMonitorController {
 		}
 		
 		//订单状态数据getOrderStatusMonitorData  页面设置订单状态
+		List<OrderStatusMonitorDTO> list_monitorOrder = this.getOrderStatusMonitorDTOList(province, status);
+		
+		if(province == null){
+			map.addAttribute("proviceName", "china");
+		}else{
+			map.addAttribute("proviceName", province);
+		}
+		map.addAttribute("status", status==null?"":status);
+		map.addAttribute("orderStatusList", list_monitorOrder);
+        return "monitor";
+        
+    }
+	
+	@RequestMapping(value="/loadOperateLog")
+	public void loadOperateLog(HttpServletRequest request, HttpServletResponse response, @Parameter String orderCode){
+		List<OrderEntity> list = orderMonitorFacade.getOrderOperatorData(orderCode);
+		
+		response.setContentType("text/plain");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			PrintWriter writer = response.getWriter();
+			writer.print(Json.toJson(list));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/loadOrderStatus")
+	public void loadOrderStatus(HttpServletRequest request, HttpServletResponse response, @Parameter String province, @Parameter String status){
+		Map<String,List<CountryOrderMonitorDTO>> map_data =orderMonitorFacade.getCountryOrderMonitorData(province);
+		List<OrderStatusMonitorDTO> list = this.getOrderStatusMonitorDTOList(province, status);
+		
+		response.setContentType("text/plain");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			PrintWriter writer = response.getWriter();
+			writer.print(Json.toJson(list));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private List<OrderStatusMonitorDTO> getOrderStatusMonitorDTOList(String province,String status){
 		List<OrderStatusMonitorDTO> list_monitorOrder = new ArrayList<OrderStatusMonitorDTO>();
 		if(province == null || province.equals("")){
 			//全国全状态
@@ -192,29 +237,7 @@ public class CountryMonitorController {
 				}
 			}
 		}
-		if(province == null){
-			map.addAttribute("proviceName", "china");
-		}else{
-			map.addAttribute("proviceName", province);
-		}
-		map.addAttribute("status", status==null?"":status);
-		map.addAttribute("orderStatusList", list_monitorOrder);
-        return "monitor";
-        
-    }
-	
-	@RequestMapping(value="/loadOperateLog")
-	public void loadOperateLog(HttpServletRequest request, HttpServletResponse response, @Parameter String orderCode){
-		List<OrderEntity> list = orderMonitorFacade.getOrderOperatorData(orderCode);
-		
-		response.setContentType("text/plain");
-		response.setHeader("Cache-Control", "no-cache");
-		response.setCharacterEncoding("UTF-8");
-		try {
-			PrintWriter writer = response.getWriter();
-			writer.print(Json.toJson(list));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return list_monitorOrder;
 	}
+	
 }
