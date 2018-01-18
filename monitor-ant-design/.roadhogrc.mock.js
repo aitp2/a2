@@ -81,4 +81,9 @@ const proxy = {
   'GET /api/notices': getNotices,
 };
 
-export default noProxy ? {} : delay(proxy, 1000);
+//export default noProxy ? {} : delay(proxy, 1000);
+
+export default {
+'GET /api/stepdata/(.*)': 'http://localhost:8888/api/stepdata/mock',
+'GET /api/profile/(.*)': 'http://localhost:8888/api/profile/advanced',
+};

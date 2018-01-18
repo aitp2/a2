@@ -5,6 +5,10 @@ export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
 
+export async function stepData() {
+	  return request('/api/stepdata/mock');
+	}
+
 export async function queryActivities() {
   return request('/api/activities');
 }

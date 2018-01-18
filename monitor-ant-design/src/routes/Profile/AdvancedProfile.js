@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import DescriptionList from '../../components/DescriptionList';
 import styles from './AdvancedProfile.less';
-
+	  
 const { Step } = Steps;
 const { Description } = DescriptionList;
 const ButtonGroup = Button.Group;
@@ -135,6 +135,9 @@ export default class AdvancedProfile extends Component {
     dispatch({
       type: 'profile/fetchAdvanced',
     });
+    dispatch({
+        type: 'steps/fetch',
+      });
 
     this.setStepDirection();
     window.addEventListener('resize', this.setStepDirection);
@@ -167,8 +170,23 @@ export default class AdvancedProfile extends Component {
 
   render() {
     const { stepDirection } = this.state;
+    const { stepList } = this.props;
     const { profile } = this.props;
     const { advancedLoading, advancedOperation1 } = profile;
+//    const { current: number, desc_create: creatTime, desc_pay: payTime, desc_send: sendTime, desc_sign: signTime, memo: memo } = stepList;
+//    const desc_create1 = (
+//    			  <div className={classNames(styles.textSecondary, styles.stepDescription)}>
+//    			    <div>{creatTime}</div>
+//    			  </div>
+//    		);
+//    const { current: number, desc_create: desc_create1 }  = stepList;
+//    const {stepss} = stepList;
+    
+//    const desc_send_s = (
+//    		  <div className={classNames(styles.textSecondary, styles.stepDescription)}>
+//    		    <div>{number}</div>
+//    		  </div>
+//    	);
     const contentList = {
       tab1: <Table
         pagination={false}
@@ -177,7 +195,7 @@ export default class AdvancedProfile extends Component {
         columns={columns}
       />,
     };
-
+    
     return (
       <PageHeaderLayout
         content={description}
@@ -188,7 +206,7 @@ export default class AdvancedProfile extends Component {
         <Steps direction={stepDirection} progressDot={customDot} current={3} >
         
           <Step title="创建" description={desc_create} />
-          <Step title="已支付" description={desc_pay} />
+          <Step title="已支付" description={desc_create} />
           <Step title="已发货" description={desc_send}/>
           <Step title="已签收" description={desc_sign}/>
         </Steps>
@@ -207,7 +225,7 @@ export default class AdvancedProfile extends Component {
 		      <Step title="已签收" 	 />
 		    </Steps>
 		    <div width="20%">order004</div> 
-	    <Steps direction={stepDirection} progressDot={customDot} current={0}>
+	    <Steps direction={stepDirection} status="error" progressDot={customDot} current={0} >
 		    <Step title="创建" description={desc_create} />
 		    <Step title="已支付" />
 		    <Step title="已发货" />
