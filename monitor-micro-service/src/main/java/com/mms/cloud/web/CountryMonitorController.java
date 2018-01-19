@@ -178,6 +178,22 @@ public class CountryMonitorController {
 		}
 	}
 	
+	//For ant design work log test
+	@RequestMapping(value="/loadOperateLogant/api/profile/advanced")
+	public void loadOperateLogant(HttpServletRequest request, HttpServletResponse response){
+		List<OrderEntity> list = orderMonitorFacade.getOrderOperatorData("order000004");
+		response.setContentType("text/plain;charset=UTF-8");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			PrintWriter writer = response.getWriter();
+			String json = "{\"advancedOperation1\":"+Json.toJson(list)+"}";
+			System.out.print(json);
+			writer.print(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	@RequestMapping(value="/loadOrderStatus")
 	public void loadOrderStatus(HttpServletRequest request, HttpServletResponse response, @Parameter String province, @Parameter String status){
 		Map<String,List<CountryOrderMonitorDTO>> map_data =orderMonitorFacade.getCountryOrderMonitorData(province);

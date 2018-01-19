@@ -96,29 +96,42 @@ const customDot = (dot, { status }) => (status === 'process' ?
   : dot
 );
 
-const columns = [{
-  title: '操作类型',
-  dataIndex: 'type',
-  key: 'type',
+const columns = [
+{
+  title: '订单号',
+  dataIndex: 'orderCode',
+  key: 'orderCode',
+},{
+  title: '订单金额',
+  dataIndex: 'totalPrice',
+  key: 'totalPrice',
 }, {
-  title: '操作人',
-  dataIndex: 'name',
-  key: 'name',
-}, {
-  title: '执行结果',
-  dataIndex: 'status',
-  key: 'status',
-  render: text => (
-    text === 'agree' ? <Badge status="success" text="成功" /> : <Badge status="error" text="驳回" />
-  ),
-}, {
-  title: '操作时间',
-  dataIndex: 'updatedAt',
-  key: 'updatedAt',
-}, {
-  title: '备注',
-  dataIndex: 'memo',
-  key: 'memo',
+  title: '订单状态',
+  dataIndex: 'orderStatus',
+  key: 'orderStatus',
+}, 
+
+//{
+//  title: '执行结果',
+//  dataIndex: 'status',
+//  key: 'status',
+//  render: text => (
+//    text === 'agree' ? <Badge status="success" text="成功" /> : <Badge status="error" text="驳回" />
+//  ),
+//}, 
+  
+ {
+  title: '用户',
+  dataIndex: 'user',
+  key: 'user',
+},{
+	title: '省份',
+	dataIndex: 'province',
+	key: 'province',
+},{
+	title: '修改时间',
+	dataIndex: 'modifyTime',
+	key: 'modifyTime',
 }];
 
 @connect(state => ({
