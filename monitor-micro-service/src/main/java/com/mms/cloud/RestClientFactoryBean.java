@@ -26,7 +26,7 @@ public class RestClientFactoryBean extends AbstractFactoryBean<RestClient> {
 
     private Sniffer sniffer;
 
-    @Value("${enableSniffer:true}")
+    @Value("${enableSniffer:false}")
     private boolean enableSniffer = true;
 
     @Autowired

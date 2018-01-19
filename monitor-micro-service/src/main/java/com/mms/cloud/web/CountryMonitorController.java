@@ -210,6 +210,20 @@ public class CountryMonitorController {
 		}
 	}
 	
+	@RequestMapping(value="/loadOrderStatusStatistics")
+	private void loadOrderStatusStatistics(HttpServletRequest request, HttpServletResponse response, @Parameter String province){
+		List<OrderStatusStatisticsDataDTO> list_statis = orderMonitorFacade.getOrderStatusStatisticsDataDTO(province);
+		response.setContentType("text/plain");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			PrintWriter writer = response.getWriter();
+			writer.print(Json.toJson(list_statis));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private List<OrderStatusMonitorDTO> getOrderStatusMonitorDTOList(String province,String status){
 		List<OrderStatusMonitorDTO> list_monitorOrder = new ArrayList<OrderStatusMonitorDTO>();
 		if(province == null || province.equals("")){
