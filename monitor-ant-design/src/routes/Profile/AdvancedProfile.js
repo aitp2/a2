@@ -25,16 +25,10 @@ const menu = (
 const description = (
 		<div className="outer-iframe">
         <div className="d-iframe">
-            <iframe id="previewIframe" src="http://powertools.local:8088/countryMonitor" frameBorder="0" 
+            <iframe id="previewIframe" src="http://localhost:8080/countryMonitor" frameBorder="0" 
             	width="1600" height="1000">
           </iframe>
         </div>
-        <div>
-        
-	        正常订单：<Progress percent={20} status="success" showInfo="false"/>
-	        预警订单：<Progress percent={20} status="active" showInfo="false"/>
-	        警告订单：<Progress percent={20} status="exception" showInfo="false"/>
-	      </div>
     </div>
 );
 
@@ -247,7 +241,11 @@ export default class AdvancedProfile extends Component {
       <PageHeaderLayout
         content={description}
       >
-     
+      <Row>
+      	<Col xl={10}  style={{background: '#3CB371',height:'25px' }}>Col1</Col>
+      	<Col xl={4} style={{background: '#FFD700',height:'25px' }}>Col</Col>
+      	<Col  xl={10} style={{background: '#FF4500',height:'25px' }}>Col</Col>
+      </Row>
         <Card title="订单监控" style={{ marginBottom: 24 }} bordered={false}>
         <div width="20%">order001</div> 
         <Steps direction={stepDirection} progressDot={customDot} current={3} >
