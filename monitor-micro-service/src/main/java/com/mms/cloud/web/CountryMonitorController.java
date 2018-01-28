@@ -166,7 +166,6 @@ public class CountryMonitorController {
 	@RequestMapping(value="/loadOperateLog")
 	public void loadOperateLog(HttpServletRequest request, HttpServletResponse response, @Parameter String orderCode){
 		List<OrderEntity> list = orderMonitorFacade.getOrderOperatorData(orderCode);
-		
 		response.setContentType("text/plain");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setCharacterEncoding("UTF-8");
@@ -181,7 +180,7 @@ public class CountryMonitorController {
 	//For ant design work log test
 	@RequestMapping(value="/loadOperateLogant/api/profile/advanced")
 	public void loadOperateLogant(HttpServletRequest request, HttpServletResponse response){
-		List<OrderEntity> list = orderMonitorFacade.getOrderOperatorData("order000004");
+		List<OrderEntity> list = orderMonitorFacade.getOrderOperatorData("order000009");
 		response.setContentType("text/plain;charset=UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setCharacterEncoding("UTF-8");

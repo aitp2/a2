@@ -31,7 +31,7 @@ const description = (
         </div>
         <div>
         
-	        正常订单：<Progress percent={60} status="success" showInfo="false"/>
+	        正常订单：<Progress percent={20} status="success" showInfo="false"/>
 	        预警订单：<Progress percent={20} status="active" showInfo="false"/>
 	        警告订单：<Progress percent={20} status="exception" showInfo="false"/>
 	      </div>
@@ -136,6 +136,7 @@ const columns = [
 
 @connect(state => ({
   profile: state.profile,
+  stepslog: state.stepslog,
 }))
 export default class AdvancedProfile extends Component {
   state = {
@@ -149,7 +150,10 @@ export default class AdvancedProfile extends Component {
       type: 'profile/fetchAdvanced',
     });
     dispatch({
-        type: 'steps/fetch',
+        type: 'profile/fetchList',
+      });
+    dispatch({
+        type: 'steps/fetchList',
       });
 
     this.setStepDirection();
@@ -181,11 +185,41 @@ export default class AdvancedProfile extends Component {
     }
   }
 
+ 
+  
   render() {
     const { stepDirection } = this.state;
-    const { stepList } = this.props;
+    const { stepslog } = this.props;
     const { profile } = this.props;
-    const { advancedLoading, advancedOperation1 } = profile;
+    //const { stepadvancedLoading, stepadvancedOperation1 } = stepslog;
+    const { advancedLoading, advancedOperation1, stepadvancedOperation1 } = profile;
+    const [ x, y, z ] = [{
+    	   "province": "china",
+    	   "status": "JINGGAO",
+    	   "num": "5",
+    	   "percentage": "56%",
+    	   "clom": "14"
+    	}, {
+    	   "province": "china",
+    	   "status": "YUJING",
+    	   "num": "2",
+    	   "percentage": "22%",
+    	   "clom": "5"
+    	}, {
+    	   "province": "china",
+    	   "status": "NOMARL",
+    	   "num": "2",
+    	   "percentage": "22%",
+    	   "clom": "5"
+    	}];
+    const { clom : clom} = x;
+    
+//    const { error, warning, normal } = stepadvancedOperation1
+    console.log({stepadvancedOperation1});
+    console.log({x});
+    console.log({y});
+    console.log({z});
+    console.log({clom});
 //    const { current: number, desc_create: creatTime, desc_pay: payTime, desc_send: sendTime, desc_sign: signTime, memo: memo } = stepList;
 //    const desc_create1 = (
 //    			  <div className={classNames(styles.textSecondary, styles.stepDescription)}>

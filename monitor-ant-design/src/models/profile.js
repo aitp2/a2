@@ -1,4 +1,4 @@
-import { queryBasicProfile, queryAdvancedProfile } from '../services/api';
+import { queryBasicProfile, queryAdvancedProfile, stepData } from '../services/api';
 
 export default {
   namespace: 'profile',
@@ -43,6 +43,21 @@ export default {
         payload: { advancedLoading: false },
       });
     },
+    *fetchList(_, { call, put }) {
+        yield put({
+          type: 'changeLoading',
+          payload: { basicLoading: true },
+        });
+        const response = yield call(stepData);
+        yield put({
+          type: 'show',
+          payload: response,
+        });
+        yield put({
+          type: 'changeLoading',
+          payload: { basicLoading: false },
+        });
+      },
   },
 
   reducers: {

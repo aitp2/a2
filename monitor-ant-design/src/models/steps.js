@@ -1,65 +1,43 @@
 import { stepData } from '../services/api';
 
 export default {
-  namespace: 'steps',
+  namespace: 'stepslog',
 
   state: {
-	    list: [],
-	    loading: true,
+	  	stepadvancedOperation1: [],
+	  	stepadvancedLoading: true,
 	  },
 
   effects: {
     *fetchList(_, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
-      const response = yield call(stepData);
-      yield put({
-          type: 'saveList',
-          payload: Array.isArray(response) ? response : [],
-        });
         yield put({
-          type: 'changeLoading',
-          payload: false,
-        });
-    },
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(stepData);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
-    },
+            type: 'changeLoading',
+            payload: { stepadvancedLoading: true },
+          });
+          const response = yield call(stepData);
+          yield put({
+            type: 'show',
+            payload: response,
+          });
+          yield put({
+            type: 'changeLoading',
+            payload: { stepadvancedLoading: false },
+          });
+        },
   },
 
   reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        list: action.payload,
-      };
-    },
-    changeLoading(state, action) {
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    },
-    saveCurrentUser(state, action) {
-      return {
-        ...state,
-        steps: action.payload,
-      };
-    },
-    changeNotifyCount(state, action) {
-      return {
-        ...state,
-        steps: {
-          ...state.steps,
-          notifyCount: action.payload,
-        },
-      };
-    },
-  },
+	    show(state, { payload }) {
+	        return {
+	          ...state,
+	          ...payload,
+	        };
+	      },
+	      changeLoading(state, { payload }) {
+	        return {
+	          ...state,
+	          ...payload,
+	        };
+	      },
+	    },
 };
