@@ -241,7 +241,7 @@ require.config({
 	            markPoint : {
 	              symbol:'pin',
 	               symbolSize: function (val) {
-	                return (val[2]+30)/2;
+	                return (val[2]+30)/5;
 	               },  
 	               label: {
 	                normal: {
@@ -276,7 +276,7 @@ require.config({
 	            markPoint : {
 	                symbol:'Circle',
 	                 symbolSize: function (val) {
-	                     return (val[2]+50) / 2;
+	                     return (val[2]+50) / 5;
 	            },
 	                effect : {
 	                    show: true,
@@ -313,7 +313,7 @@ require.config({
 	            markPoint : {
 	                symbol:'Circle',
 	                symbolSize: function (val) {
-	                     return (val[2]+30)/2 ;
+	                     return (val[2]+30)/5 ;
 	            },
 	             label: {
 	                normal: {
@@ -549,7 +549,7 @@ require.config({
              
              
              <div class="ant-steps ant-steps-horizontal ant-steps-label-vertical ant-steps-dot">
-              <div class="ant-steps-item <#if orderStatusMonitorDTO.cancelFlag == 'true'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.payStatus == 'NOMARL'> ant-steps-item-finish</#if><#if orderStatusMonitorDTO.payStatus == 'YUJING'> ant-steps-item-orderyujing</#if> ">
+              <div class="ant-steps-item <#if orderStatusMonitorDTO.cancelFlag == 'true'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.payStatus == '' || orderStatusMonitorDTO.payStatus == 'NOMARL'> ant-steps-item-finish</#if><#if orderStatusMonitorDTO.payStatus == 'YUJING'> ant-steps-item-orderyujing</#if> ">
                <div class="ant-steps-item-tail"></div>
                <div class="ant-steps-item-icon">
                 <span class="ant-steps-icon"><span class="ant-steps-icon-dot"></span></span>
@@ -568,7 +568,9 @@ require.config({
                </div>
               </div>
               
-              <div class="ant-steps-item  <#if orderStatusMonitorDTO.sendStatus == 'NOMARL' > ant-steps-item-finish</#if><#if orderStatusMonitorDTO.payStatus == ''|| orderStatusMonitorDTO.payStatus == 'YUJING'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.sendStatus == 'YUJING' > ant-steps-item-orderyujing</#if><#if orderStatusMonitorDTO.sendStatus == 'JINGGAO' > ant-steps-item-orderjinggao</#if>">
+              <div class="ant-steps-item  <#if orderStatusMonitorDTO.sendStatus == 'NOMARL' > ant-steps-item-finish</#if>
+              <#if orderStatusMonitorDTO.payStatus == 'NOMARL' && orderStatusMonitorDTO.sendStatus == ''> ant-steps-item-finish</#if>
+              <#if orderStatusMonitorDTO.payStatus == ''|| orderStatusMonitorDTO.payStatus == 'YUJING'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.sendStatus == 'YUJING' > ant-steps-item-orderyujing</#if><#if orderStatusMonitorDTO.sendStatus == 'JINGGAO' > ant-steps-item-orderjinggao</#if>">
                <div class="ant-steps-item-tail"></div>
                <div class="ant-steps-item-icon">
                 <span class="ant-steps-icon"><span class="ant-steps-icon-dot"></span></span>
@@ -592,7 +594,9 @@ require.config({
                </div>
               </div>
               
-              <div class="ant-steps-item <#if orderStatusMonitorDTO.receviedStatus == 'NOMARL' > ant-steps-item-finish</#if><#if orderStatusMonitorDTO.sendStatus == '' || orderStatusMonitorDTO.sendStatus == 'YUJING' || orderStatusMonitorDTO.sendStatus == 'JINGGAO'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.receviedStatus == 'YUJING' > ant-steps-item-orderyujing</#if><#if orderStatusMonitorDTO.receviedStatus == 'JINGGAO' > ant-steps-item-orderjinggao</#if>">
+              <div class="ant-steps-item  <#if orderStatusMonitorDTO.receviedStatus == 'NOMARL' > ant-steps-item-finish</#if>
+              <#if orderStatusMonitorDTO.sendStatus == 'NOMARL' && orderStatusMonitorDTO.receviedStatus == ''> ant-steps-item-finish</#if>
+              <#if orderStatusMonitorDTO.sendStatus == ''|| orderStatusMonitorDTO.sendStatus == 'YUJING' || orderStatusMonitorDTO.sendStatus == 'JINGGAO'> ant-steps-item-wait</#if><#if orderStatusMonitorDTO.receviedStatus == 'YUJING' > ant-steps-item-orderyujing</#if><#if orderStatusMonitorDTO.receviedStatus == 'JINGGAO' > ant-steps-item-orderjinggao</#if>">
                <div class="ant-steps-item-tail"></div>
                <div class="ant-steps-item-icon">
                 <span class="ant-steps-icon"><span class="ant-steps-icon-dot"></span></span>

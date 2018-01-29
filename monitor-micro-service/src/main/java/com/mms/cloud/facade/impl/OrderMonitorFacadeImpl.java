@@ -287,7 +287,7 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 			//已创建24h内或已取消为正常
 			if(cancelTime != null || DateCompare.compareRuleTimeAndNow(createdTime, rule_pay_yujing_hour) >= 0 
 					){
-				return MonitorStatus.NOMARL;
+				return "";
 			}
 			//超24h未支付为警告
 			else return MonitorStatus.YUJING;
@@ -315,7 +315,7 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 		}else{
 			//已支付24h内为正常
 			if(DateCompare.compareRuleTimeAndNow(payTime, rule_send_yujing_hour) >= 0 ){
-				return MonitorStatus.NOMARL;
+				return "";
 			}
 			//24h-30h未发货为预警
 			else if(DateCompare.compareRuleTimeAndNow(payTime, rule_send_yujing_hour) < 0
@@ -346,12 +346,15 @@ public class OrderMonitorFacadeImpl implements OrderMonitorFacade{
 				receviedTime = orderEntity.getModifyTime();
 			}
 		}
+		if(sendTime == null){
+			return "";
+		}
 		if(receviedTime != null){
 			return MonitorStatus.NOMARL;
 		}else{
 			////已发货48h内为正常
 			if(DateCompare.compareRuleTimeAndNow(sendTime, rule_recevied_yujing_hour) >= 0 ){
-				return MonitorStatus.NOMARL;
+				return "";
 			}
 			////已发货48h-72h为预警
 			else if(DateCompare.compareRuleTimeAndNow(sendTime, rule_recevied_yujing_hour) < 0
