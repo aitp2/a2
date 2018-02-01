@@ -18,7 +18,9 @@ public class DateCompare {
 		Calendar c_now=Calendar.getInstance();
 		try {
 			c_ruletime.setTime(simpleFormat.parse(modifyTime));
-			c_ruletime.add(Calendar.HOUR_OF_DAY, new Integer(rulehour));
+			//TODO 待还原，为demo，设定为分钟
+			c_ruletime.add(Calendar.MINUTE, new Integer(rulehour));
+			//c_ruletime.add(Calendar.HOUR_OF_DAY, new Integer(rulehour));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -187,33 +187,32 @@ export default class AdvancedProfile extends Component {
     const { profile } = this.props;
     //const { stepadvancedLoading, stepadvancedOperation1 } = stepslog;
     const { advancedLoading, advancedOperation1, stepadvancedOperation1 } = profile;
-    const [ x, y, z ] = [{
-    	   "province": "china",
-    	   "status": "JINGGAO",
-    	   "num": "5",
-    	   "percentage": "56%",
-    	   "clom": "14"
-    	}, {
-    	   "province": "china",
-    	   "status": "YUJING",
-    	   "num": "2",
-    	   "percentage": "22%",
-    	   "clom": "5"
-    	}, {
-    	   "province": "china",
-    	   "status": "NOMARL",
-    	   "num": "2",
-    	   "percentage": "22%",
-    	   "clom": "5"
-    	}];
-    const { clom : clom} = x;
-    
-//    const { error, warning, normal } = stepadvancedOperation1
+    const xx = [{
+ 	   "province": "china",
+	   "status": "JINGGAO",
+	   "num": "5",
+	   "percentage": "56%",
+	   "clom": "14"
+	}, {
+	   "province": "china",
+	   "status": "YUJING",
+	   "num": "2",
+	   "percentage": "22%",
+	   "clom": "5"
+	}, {
+	   "province": "china",
+	   "status": "NOMARL",
+	   "num": "2",
+	   "percentage": "22%",
+	   "clom": "5"
+	}];
+    const [ x, y, z ] = xx;
+//  const [ x, y, z ]  = stepadvancedOperation1
     console.log({stepadvancedOperation1});
+    console.log({xx});
     console.log({x});
     console.log({y});
     console.log({z});
-    console.log({clom});
 //    const { current: number, desc_create: creatTime, desc_pay: payTime, desc_send: sendTime, desc_sign: signTime, memo: memo } = stepList;
 //    const desc_create1 = (
 //    			  <div className={classNames(styles.textSecondary, styles.stepDescription)}>
